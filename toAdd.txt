@@ -1,0 +1,5 @@
+FFT
+Markov chain
+Convex Hull
+Convex Hull trick
+Li chao tree
