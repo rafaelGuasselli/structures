@@ -3,3 +3,7 @@ Markov chain
 Convex Hull
 Convex Hull trick
 Li chao tree
+Emparelhamento máximo
+Emparelhamento estável
+Emparelhamento perfeito
+Fluxo máximo (Kuhn, Edmond Karp, Hopcroft-Karp)
