@@ -21,6 +21,12 @@ struct point{
     friend ld cross(const point& p, const point& q) { 	
         return p.x * q.y - p.y * q.x; 
     }
+	friend ld dist(const point&p, const point& q) {
+		return pow(p.x-q.x, 2)+pow(p.y-q.y, 2);
+	}
+	bool operator < (const point&p) const{
+		return x<p.x || (x == p.x && y<p.y);
+	}
 };
 
 struct halfplane{
