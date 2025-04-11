@@ -5,3 +5,5 @@ out
 in
 in.txt
 out.txt
+/tests/*
+!tests/*.md
