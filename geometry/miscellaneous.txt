@@ -1,0 +1,3 @@
+Vector triangle area: 2A = cross(v(p1, p2), v(p2, p3))
+check if A->B is at left of O, do cross of A->B, A->O, aka cross(b-a, o-a)
+if cross > 0 ? left : if cross < 0 ? right : collinear	
