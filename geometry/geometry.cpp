@@ -18,7 +18,7 @@ struct point{
     friend ld cross(const point p, const point q) {
         return p.x * q.y - p.y * q.x;  }
 	friend ld dist(const point&p, const point& q) {
-		return sqrt(dot(p, q)); }
+		return sqrt(fabs(dot(p-q, p-q))); }
 	friend ld proj(const point&p, const point&q) {
 		return dot(p, q)/(dist(p, q)); }
 	bool operator < (const point&p) const{
@@ -79,6 +79,13 @@ double area(const vector<point>& v){ // sorted polygon by angle
 	} return fabs(res)/2;
 }
 int sgn(ld val ){ return val > 0 ? 1 : (val == 0 ? 0 : -1);}
+
+point mass_center(const vector<point> &v){
+	ld x = 0, y = 0; int n = v.size();
+	for(int i = 0; i<n; i++){
+		x += v[i].x; y+= v[i].y;}
+	return point(x/(ld)n, y/(ld)n);
+}
 
 bool pointInTriangle(point a, point b, point c, point p) {
     ld s1 = abs(cross(b-a, c-a));
