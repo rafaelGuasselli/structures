@@ -1,8 +1,5 @@
 // Algoritmo do cp algorithms, usa o Kuhn porém não como uma função externa, pois é modificado e reutilizado
-#include <bits/stdc++.h>
-#define INF INT_MAX
-using namespace std;
-
+#include "../base.cpp"
 int hungarian(vector<vector<int>> &A){
 	int n = A.size()-1, m = A[0].size()-1; // For some reason, the cp algorithm uses 1-index
 	vector<int> u (n+1), v (m+1), p (m+1), way (m+1);

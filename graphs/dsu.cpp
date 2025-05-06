@@ -1,6 +1,4 @@
-#include<bits/stdc++.h>
-using namespace std;
-
+#include "../base.cpp"
 struct DSU {
 	vector<int> parent, size;
 	void create(int n) {

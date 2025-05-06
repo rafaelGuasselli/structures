@@ -1,6 +1,4 @@
-#include<bits/stdc++.h>
-using namespace std;
-
+#include "../base.cpp"
 struct Graph {
 	vector<vector<pair<int, int>>> adj;
 	vector<int> dist;
