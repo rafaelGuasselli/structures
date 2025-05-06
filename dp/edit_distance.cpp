@@ -1,3 +1,4 @@
+#include "../base.cpp"
 string s, t;
 int edit(int s1, int t1, vector<vector<int>> &memo){
 	if(!t1) return s1;

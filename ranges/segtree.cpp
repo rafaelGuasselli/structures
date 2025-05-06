@@ -1,3 +1,4 @@
+#include "../base.cpp"
 // To change the operation, just change conquer and RSQ and propagate
 class SegTree{
 private:

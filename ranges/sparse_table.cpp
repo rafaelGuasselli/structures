@@ -1,6 +1,4 @@
-#include <bits/stdc++.h>
-using namespace std;
-
+#include "../base.cpp"
 struct SparseTable {
     vector<vector<int>> st;
 	vector<int> log;

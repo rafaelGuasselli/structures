@@ -1,3 +1,4 @@
+#include "../base.cpp"
 // Get all divisors via a map with the prime factors
 // Probably could be done better.
 void divisors(map<int, int> &factors, set<int> &d){

@@ -1,7 +1,4 @@
-#include <bits/stdc++.h>
-#define ld long double
-using namespace std;
-
+#include "../base.cpp"
 const ld eps = 1e-9, inf = 1e9;
 
 struct point {

@@ -1,3 +1,4 @@
+#include "../base.cpp"
 // {gcd, x, y}
 tuple<int, int, int> gcd(int a, int b) {
     if(b == 0) return make_tuple(a, 1, 0);

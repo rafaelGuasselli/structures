@@ -1,4 +1,6 @@
-int kmp(string &t, string &p){
+#include "../base.cpp"
+#include "prefix_function.cpp"
+vector<int> kmp(string &t, string &p){
 	vector<int> lps = prefix_function(t);
 	int i = 0, j = 0;
 	vector<int> res;
@@ -17,5 +19,5 @@ int kmp(string &t, string &p){
 			}
 		}
 	}
-	return pos;
+	return res;
 }
