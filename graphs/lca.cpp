@@ -19,7 +19,7 @@ void dfs(int v, int p){
 	en[v] = ++tmp;
 }
 bool is_ancestor(int u, int v){
-	return st[u] <= st[v] && en[v] <= en[u]; // v is inside u
+	return st[u] <= st[v] && en[v] <= en[u]; // v is above u
 }
 
 int lca(int u, int v){
