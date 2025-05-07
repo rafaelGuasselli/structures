@@ -54,12 +54,15 @@ void pre_compute_lca(int root){
 
 struct Virtual_tree{
 	vector<vector<int>> adj_vt;
+	vector<bool> important;
 	int vt_root;
-	bool cmp(int u, int v){
+	static bool cmp(int u, int v){
 		return st[u] < st[v];
 	}
 	Virtual_tree(int n, vector<int> &vert){
 		adj_vt.assign(n, vector<int>());
+		important.assign(n, false);
+		for(int e: vert) important[e] = true;
 		// Pick the needed vertices 
 		sort(vert.begin(), vert.end(), cmp);
 		int k = vert.size();
@@ -90,15 +93,40 @@ struct Virtual_tree{
 		vt_root = st[0];
 	}
 
-	bool solve(){
+	int dist(int u, int v){
+		return abs(depth[u] - depth[v]);
+	}
 
+	bool solve(int v){
+		cout<<v<<endl;
+		if(important[v]){
+			for(int u: adj_vt[v]) if(important[u] && dist(u, v) <= 2) return true;
+		} else {
+			bool d1 = false, d2 = false;
+			for(int i = 0; i<adj[v].size(); i++){
+				if(i == 0 && important[adj[v][i]] && dist(adj[v][i], v) == 1) d1 = true;
+				if(i == 1 && important[adj[v][i]] && dist(adj[v][i], v) == 1) d2 = true;
+			}
+			if(d1 && d2) return true;
+		}
+		for(int u: adj_vt[v])
+			return solve(u);
+
+		return false;
+	}
+
+	bool solve(){
+		// Aqui já vou ter a árvore reduzida
+		// Res vai ser verdadeiro se: A distância entre dois vértices importantes for menor igual à dois, isto é, há no máximo um vértice
+		// entre eles. A distância de u até v é o abs(depth[u] - depth[v]), onde depth é o vetor profundidade gerado pela dfs no LCA.
+		return solve(vt_root);
 	}
 };
 
 
 void work(){
 	cin>>n;
-	adj.assign(n, vector<int>());
+	adj.assign(n, vector<int>()); // outgoing edges
 	values.resize(n);
 	positions.assign(n, vector<int>());
 	for(int i = 0; i < n; i++){
@@ -107,27 +135,28 @@ void work(){
 	}
 	for(int i = 0; i < n-1; i++){
 		int u, v; cin>>u>>v; u--; v--;
+		adj[u].push_back(v);
 		adj[v].push_back(u);
 	}
-	int root;
-	for(int i = 0; i<n; i++) if(adj[i].size() == 1) root = i;
+	int root = 0;
+	while(adj[root].size() == 3) root++;
+	// cout<<root<<endl;
 	// just to make sure that I sent the correct root
 
 	pre_compute_lca(root);
-	
+	string res_ = "";
 	for(int i = 0; i<n; i++){
 		bool res = false;
 		if(positions[i].size() > 1){
 			Virtual_tree * vt = new Virtual_tree(n, positions[i]);
 			res = vt->solve();
 		}
-		cout<<res;
-	} cout<<endl;
-	
+		res_ += res ? '1' : '0';
+	} cout<<res_<<endl;	
 }
 
-
 int main(){
+	fast_io();
 	int tt; cin>>tt;
 	while(tt--) work();
 }
