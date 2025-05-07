@@ -9,7 +9,8 @@ struct Convex_hull{
 	friend void graham_scan(vector<point> &a, bool include_collinear = false){
 		point p0 = *min_element(a.begin(), a.end(), point::smallest_y);
 		point::translat = p0;
-		sort(a.begin(), a.end(), point::cw_cmp); 
+		sort(a.begin(), a.end(), point::cw_cmp);
+		// Often it will be requested to sort ccw, so just change the algorithm for that and it already works.
 		if(include_collinear){ 
 			int i = (int)a.size()-1;
 			while(i >= 0 && collinear(p0, a[i], a.back())) i--;
