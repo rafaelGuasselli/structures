@@ -1,6 +1,7 @@
 #include "../base.cpp"
 // LCA by binary_lifting
-vector<int> st, en;
+
+vector<int> st, en, depth; // depth is not needed for lca but for the virtual_tree
 vector<vector<int>> adj, up; // up is the "ancestors" vector but up[i][j] is the 2^j ancestor of i.
 int n, tmp, max_it;
 void dfs(int v, int p){
@@ -11,13 +12,14 @@ void dfs(int v, int p){
 	}
 	for(int e: adj[v]){
 		if(e != p){
+			depth[e] = depth[v]+1;
 			dfs(e, v);
 		}
 	}
 	en[v] = ++tmp;
 }
 bool is_ancestor(int u, int v){
-	return st[u] <= st[v] && en[u] >= en[v];
+	return st[u] <= st[v] && en[v] <= en[u]; // v is inside u
 }
 
 int lca(int u, int v){
@@ -30,7 +32,8 @@ int lca(int u, int v){
 }
 
 void pre_compute_lca(int root){
-	st.resize(n); en.resize(n);
+	st.resize(n); en.resize(n); depth.resize(n);
+	depth[root] = 0;
 	tmp = 0;
 	max_it = ceil(log2(n));
 	up.assign(n, vector<int>(max_it+1));
