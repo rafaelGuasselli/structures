@@ -6,7 +6,6 @@
 using namespace std;
 
 void fast_io(){
-	cin.tie(0);
 	cout.tie(0);
 	ios_base::sync_with_stdio(0);
 }
@@ -59,6 +58,14 @@ struct Virtual_tree{
 	static bool cmp(int u, int v){
 		return st[u] < st[v];
 	}
+	~Virtual_tree() {
+		for (auto &edges : adj_vt) {
+			edges.clear();
+		}
+		adj_vt.clear();
+		important.clear();
+	}
+	Virtual_tree(){}
 	Virtual_tree(int n, vector<int> &vert){
 		adj_vt.assign(n, vector<int>());
 		important.assign(n, false);
@@ -73,45 +80,56 @@ struct Virtual_tree{
 		vert.erase(unique(vert.begin(), vert.end()), vert.end()); // Erase duplicates
 
 		// build the actually virtual tree
-		vector<int> st; st.push_back(vert[0]);
+		vector<int> st_v; st_v.push_back(vert[0]);
 
 		for(int i = 1; i<vert.size(); i++){
 			int u = vert[i];
-			while(st.size() >= 2 && !is_ancestor(st.back(), u)){
+			while(st_v.size() >= 2 && !is_ancestor(st_v.back(), u)){
 				// add edge to the tree
-				adj_vt[st[st.size()-2]].push_back(st.back()); 
+				adj_vt[st_v[st_v.size()-2]].push_back(st_v.back()); 
 				// here only the top -> bottom is added, which is fine as we only need to transverse it from the root to the leaves.
-				st.pop_back();
+				st_v.pop_back();
 			}
-			st.push_back(u);
+			st_v.push_back(u);
 		}
 
-		while(st.size() >= 2){
-			adj_vt[st[st.size()-2]].push_back(st.back());
-			st.pop_back();
+		while(st_v.size() >= 2){
+			adj_vt[st_v[st_v.size()-2]].push_back(st_v.back());
+			st_v.pop_back();
 		}
-		vt_root = st[0];
+		vt_root = st_v[0];
+	}
+
+	void print_tree(int v){
+		cout<<"Vertice: "<<v<<" "<<(important[v] ? "Importante" : "")<<endl;
+		cout<<"Filhos:";
+		for(int e: adj_vt[v]) cout<<" "<<e;
+		cout<<endl;
+		for(int e: adj_vt[v]) print_tree(e); 
 	}
 
 	int dist(int u, int v){
 		return abs(depth[u] - depth[v]);
 	}
 
-	bool solve(int v){
-		cout<<v<<endl;
+	bool solve(int v, int last_important = -1){
 		if(important[v]){
-			for(int u: adj_vt[v]) if(important[u] && dist(u, v) <= 2) return true;
-		} else {
-			bool d1 = false, d2 = false;
-			for(int i = 0; i<adj[v].size(); i++){
-				if(i == 0 && important[adj[v][i]] && dist(adj[v][i], v) == 1) d1 = true;
-				if(i == 1 && important[adj[v][i]] && dist(adj[v][i], v) == 1) d2 = true;
+			if(last_important != -1){
+				if(dist(v, last_important) <= 2) return true;
 			}
-			if(d1 && d2) return true;
+			for(int e: adj_vt[v]){
+				if(solve(e, v)) return true;
+			}
+		} else {
+			int count_ = 0;
+			for(int e: adj_vt[v]){
+				if(important[e] && dist(v, e) == 1) count_++;
+			}
+			if(count_ >= 2) return true;
+			for(int e: adj_vt[v]){
+				if(solve(e, last_important)) return true;
+			}
 		}
-		for(int u: adj_vt[v])
-			return solve(u);
-
 		return false;
 	}
 
@@ -139,19 +157,20 @@ void work(){
 		adj[v].push_back(u);
 	}
 	int root = 0;
-	while(adj[root].size() == 3) root++;
 	// cout<<root<<endl;
 	// just to make sure that I sent the correct root
 
 	pre_compute_lca(root);
 	string res_ = "";
+	Virtual_tree vt;
 	for(int i = 0; i<n; i++){
 		bool res = false;
 		if(positions[i].size() > 1){
-			Virtual_tree * vt = new Virtual_tree(n, positions[i]);
-			res = vt->solve();
+			vt = Virtual_tree(n, positions[i]);
+			// if(i == 11) vt->print_tree(vt->vt_root);
+			res = vt.solve();
 		}
-		res_ += res ? '1' : '0';
+		res_.push_back(res ? '1' : '0');
 	} cout<<res_<<endl;	
 }
 
