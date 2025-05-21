@@ -1,4 +1,4 @@
-#include "../base.cpp"
+#include "../presets/base.cpp"
 #include "prefix_function.cpp"
 vector<int> kmp(string &t, string &p){
 	vector<int> lps = prefix_function(t);

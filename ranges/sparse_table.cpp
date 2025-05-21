@@ -1,4 +1,4 @@
-#include "../base.cpp"
+#include "../presets/base.cpp"
 struct SparseTable {
     vector<vector<int>> st;
 	vector<int> log;

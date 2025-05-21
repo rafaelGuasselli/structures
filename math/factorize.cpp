@@ -1,4 +1,4 @@
-#include "../base.cpp"
+#include "../presets/base.cpp"
 // Faster option: while(a % 2) and while(a % 3) first
 // and after that i = 5, i+=6, (a % i) and (a % (i+2))
 void factorize(int a, map<int, int> &factors){

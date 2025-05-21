@@ -1,4 +1,4 @@
-#include "../base.cpp"
+#include "../presets/base.cpp"
 struct Kuhn{
 
 	// Para grafos bipartidos
