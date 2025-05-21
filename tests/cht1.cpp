@@ -1,40 +1,58 @@
 #include <bits/stdc++.h>
-using namespace std;
-#define ll long long
 #define int long long
+#define INF 10e9
+using namespace std;
 #define area(V) V[0]*V[1]-V[2] 
 
-
-struct Line {
-	mutable ll k, m, p;
-	bool operator<(const Line& o) const { return k < o.k; }
-	bool operator<(ll x) const { return p < x; }
+struct line {
+    int m, b;
+	line(int a, int k): m(a), b(k){};
+    
+	int operator()(int x)
+    {
+        return m * x + b;
+    }
 };
 
-struct LineContainer : multiset<Line, less<>> {
-	// (for doubles, use inf = 1/.0, div(a,b) = a/b)
-	static const ll inf = LLONG_MAX;
-	ll div(ll a, ll b) { // floored division
-		return a / b - ((a ^ b) < 0 && a % b); }
-	bool isect(iterator x, iterator y) {
-		if (y == end()) return x->p = inf, 0;
-		if (x->k == y->k) x->p = x->m > y->m ? inf : -inf;
-		else x->p = div(y->m - x->m, x->k - y->k);
-		return x->p >= y->p;
+const int MAXN = 1e6+2;
+
+vector<line> a(MAXN * 4);
+
+void init(){
+	for(int i = 0; i<4*MAXN; i++){
+		a[i] = line(0, INF);
 	}
-	void add(ll k, ll m) {
-		auto z = insert({k, m, 0}), y = z++, x = y;
-		while (isect(y, z)) z = erase(z);
-		if (x != begin() && isect(--x, y)) isect(x, y = erase(y));
-		while ((y = x) != begin() && (--x)->p >= y->p)
-			isect(x, erase(y));
-	}
-	ll query(ll x) {
-		assert(!empty());
-		auto l = *lower_bound(x);
-		return l.k * x + l.m;
-	}
-};
+}
+
+void insert(int l, int r, line segment, int idx = 0){
+    if (l + 1 == r) {
+        if (segment(l) > a[idx](l))
+            a[idx] = segment;
+        return;
+    }
+    int mid = (l + r) / 2;
+    int leftson = idx * 2 + 1, rightson = idx * 2 + 2;
+    if (a[idx].m > segment.m)
+        swap(a[idx], segment);
+    if (a[idx](mid) < segment(mid)) {
+        swap(a[idx], segment);
+        insert(l, mid, segment, leftson);
+    }
+    else
+        insert(mid, r, segment, rightson);
+}
+
+int query(int l, int r, int x, int idx = 0){
+    if (l + 1 == r)
+        return a[idx](x);
+    int mid = (l + r) / 2;
+    int leftson = idx * 2 + 1;
+    int rightson = idx * 2 + 2;
+    if (x < mid)
+        return max(a[idx](x), query(l, mid, x, leftson));
+    else
+        return max(a[idx](x), query(mid, r, x, rightson));
+}
 
 signed main(){
 	cin.tie(0); ios_base::sync_with_stdio(0);
@@ -45,15 +63,15 @@ signed main(){
 		cin>>v[i][0]>>v[i][1]>>v[i][2];
 	}
 	sort(v.begin(), v.end());
+	init();
 
-	LineContainer cht;
 	vector<int> dp(n+1, 0);
-	cht.add(0, 0);
+	insert(0, MAXN, line(0, 0));
 
 	int maior = 0;
 	for(int i = 1; i<=n; i++){
-		dp[i] = area(v[i]) + cht.query(v[i][1]);
-		cht.add(-v[i][0], dp[i]);
+		dp[i] = area(v[i]) + query(0, MAXN, v[i][1]);
+		insert(0, MAXN, line(-v[i][0], dp[i]));
 
 		maior = max(maior, dp[i]);
 	}
