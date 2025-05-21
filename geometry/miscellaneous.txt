@@ -1,5 +1,5 @@
 Vector triangle area: 2A = cross(v(p1, p2), v(p2, p3))
 check if A->B is at left of O, do cross of A->B, A->O, aka cross(b-a, o-a)
-if cross > 0 ? left : if cross < 0 ? right : collinear	
+if cross > 0 ? left : if cross < 0 ? right : collinear  
 Pick's theorem: Given a polygon with all vertices in integer positions, the area of it is denoted by I and B where I is the number of points
 strictly inside the polygon and B the number of points in the border of the polygon, where S = I - 1 + B/2; 
