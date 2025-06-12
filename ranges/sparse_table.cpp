@@ -7,6 +7,9 @@ struct SparseTable {
     n = a.size();
     k = log2(n)+1;
     st.assign(k, vector<int>(n));
+    for(int i=0;i<a.size();i++) {
+      st[0][i] = a[i];
+    }
     copy(a.begin(), a.end(), st[0]);
     log.assign(n+1, 0);
     for(int i = 2; i<=n; i++) log[i] = log[i/2]+1;

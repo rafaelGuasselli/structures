@@ -42,7 +42,7 @@ private:
   }
 
   void update(int i, int l, int r, int tl, int tr, int x) {
-    propagate(i, l, r);
+    propagate(i, tl, tr);
     if (l > tr || r < tl) return;
     if ((l <= tl) && (r >= tr)) {
       Lazy[i] = x;
@@ -56,7 +56,7 @@ private:
   }
 
 public:
-  SegTree(int sz): n(sz), St(4*n), Lazy(4*n, -1) {}
+  SegTree(int sz): n(sz), St(4*n), Lazy(4*n, -1), A(n) {}
   SegTree(const vector<ll> &initial):SegTree(initial.size()) {
     A = initial;
     build(1, 0, n-1);
