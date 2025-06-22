@@ -2,7 +2,7 @@
 #define ll long long
 #define ld long double
 #define INF INT_MAX
-
+#define all(v) v.begin(), v.end()
 using namespace std;
 
 void fast_io(){
@@ -12,12 +12,5 @@ void fast_io(){
 }
 
 int main(){
-	/*	STRONG RANDOM GENERATION
-
-		random_device rd;
-		mt19937 rng(rd());
-		uniform_int_distribution<int> dist(1, 3); // 1, 3 incluse range
-		dist(rng) -> returns random number between 1 and 3 with equal chance distribution.
-
-	*/
+	
 }
