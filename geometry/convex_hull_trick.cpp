@@ -5,6 +5,7 @@ using namespace std;
 // Teoricamente é pior na inserção de linhas, pois é n log n enquanto a outra é linear
 // Porém funciona para mais casos pois a manutenção é dinâmica, não exige pré ordenamento
 
+// Isso é para a maxQuery, caso deseje o mínimo, basta trocar o sinal das duas variaveis ao adicionar e ao pegar o valor da query.
 struct Line {
   mutable ll k, m, p;
   bool operator<(const Line& o) const { return k < o.k; }
