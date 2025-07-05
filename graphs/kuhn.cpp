@@ -39,7 +39,11 @@ struct Kuhn{
       used.assign(n, false);
       try_kuhn(v);
     }
-    
+    int c = 0;
+	 for(int i = 0; i<k; i++){
+		if(mt[i] != -1) c++;
+	 }
+	 cout<<c<<endl;
     for (int i = 0; i < k; ++i)
       if (mt[i] != -1)
         // mt[i] tells what vertex of the first part is connected to the vertex i of the second part, or -1 if it's not connected.
