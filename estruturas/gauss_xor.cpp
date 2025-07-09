@@ -37,11 +37,19 @@ struct Gauss_xor{
 		}
 		return k;
 	}
-	bool exist(ll k){
+	bool exist(ll k){ // só retorna se existe ou não
 		for(int i = B-1; i>=0; i--){
-			if((k & (1LL << i)) == 0) k ^= base[i];
+			if((k & (1LL << i)) != 0) k ^= base[i];
 		}
 		return k == 0;
+	}
+	ll count(ll k){ // Conta quantas vezes é possível criar um certo número.
+		// só pensar na relação entre números dependentes e independentes.
+		for(int i = B-1; i>=0; i--){
+			if((k & (1LL << i)) != 0) k ^= base[i];
+		}
+		if(k) return 0; 
+		return fast_pow(2, size_total-size); 
 	}
 
 };
