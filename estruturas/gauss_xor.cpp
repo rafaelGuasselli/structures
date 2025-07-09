@@ -51,6 +51,9 @@ struct Gauss_xor{
 		if(k) return 0; 
 		return fast_pow(2, size_total-size); 
 	}
+	// uma outra aplicação é relacionada ao xor e o quadrado de algum número
+	// já que números quadrados tem todos os seus fatores primos aparecendo uma quantidade par de vezes,
+	// o xor dos fatores primos é zero, iff o número for um quadrado
 
 };
 
