@@ -52,3 +52,13 @@ private:
 	St[i] = conquer(St[rl(i)], St[rr(i)]);
   }
  
+public:
+  SegTree(int sz): n(sz), St(4*n), A(n) {}
+  SegTree(const vector<Node> &initial):SegTree(initial.size()) {
+    A = initial;
+    build(1, 0, n-1);
+  }
+ 
+  void update(int i, int j, Node val) { update(1,i,j, 0,n-1, val);}
+  Node RSQ(int i, int j) { return RSQ(1, i,j,0,n-1);}
+};
