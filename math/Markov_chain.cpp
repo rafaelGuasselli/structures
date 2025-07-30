@@ -45,6 +45,6 @@ vector<vector<ld>> markov_chain(vector<vector<ld>> states, int initial_state, in
 	initial_vector[initial_state][0] = 1;
 
 	vector<vector<ld>> states_pot = fast_pow(states, m);
-	return mult(states_pot, initial_vector);
+	return mult(initial_vector, states_pot);
 }
 
