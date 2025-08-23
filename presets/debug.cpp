@@ -5,6 +5,7 @@
 // de submeter no codeforces, não tenho certeza se funciona da mesma forma em outras
 // plataformas.
 /******** Debug Code *******/
+#pragma region debug
 void __print(int x) { cerr << x; }
 void __print(long x) { cerr << x; }
 void __print(long long x) { cerr << x; }
@@ -99,3 +100,4 @@ void _print(const Head &H, const Tail &...T) {
 #else
 #define debug(...)
 #endif
+#pragma endregion
